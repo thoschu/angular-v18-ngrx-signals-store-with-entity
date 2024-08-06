@@ -25,3 +25,17 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Info
+
+### Prettier
+
+> - https://prettier.io/docs/en/install.html
+>
+> > npm install --save-dev --save-exact prettier
+>
+> > npx prettier ./src/main.ts
+>
+> > npx prettier --check ./src/index.html
+>
+> > npx prettier --write ./src/index.html
