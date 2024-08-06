@@ -39,3 +39,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 > > npx prettier --check ./src/index.html
 >
 > > npx prettier --write ./src/index.html
+>
+> > npm i -D eslint-config-prettier
+>
+> > npx eslint-config-prettier .
