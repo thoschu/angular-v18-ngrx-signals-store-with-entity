@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prettier-watch": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}"
+    "prettier:watch": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
+    "prettier:check": "prettier --check src",
+    "prettier:write": "prettier --write --ignore-unknown src",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +37,7 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
+    "husky": "^9.1.4",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

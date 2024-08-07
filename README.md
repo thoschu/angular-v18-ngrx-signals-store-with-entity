@@ -31,6 +31,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Prettier
 
 > - https://prettier.io/docs/en/install.html
+> 
+> - https://github.com/prettier
 >
 > > npm install --save-dev --save-exact prettier
 >
@@ -40,6 +42,20 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 >
 > > npx prettier --write ./src/index.html
 >
-> > npm i -D eslint-config-prettier
+> - https://github.com/prettier/eslint-config-prettier
 >
 > > npx eslint-config-prettier .
+>
+
+### Husky
+
+> - https://typicode.github.io/husky/
+>
+> - https://www.npmjs.com/package/husky
+>
+> > npm i husky -D
+> 
+> > npx husky init
+>
+
+### ESLint
