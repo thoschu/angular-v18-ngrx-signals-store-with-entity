@@ -14,5 +14,5 @@ export class AppComponent {
     name: 'EstimateUai',
   };
 
-  public title: string = AppComponent.config.name;
+  public title: string = AppComponent.config.name + AppComponent.config.id;
 }
