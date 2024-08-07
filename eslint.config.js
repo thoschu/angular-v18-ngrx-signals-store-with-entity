@@ -3,6 +3,8 @@ const eslint = require("@eslint/js")
 const tseslint = require("typescript-eslint")
 const angular = require("angular-eslint")
 
+// https://github.com/wesbos/eslint-config-wesbos/blob/master/.eslintrc.js
+
 module.exports = tseslint.config(
   {
     ignores: [],
