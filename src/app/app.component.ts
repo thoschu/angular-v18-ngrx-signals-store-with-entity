@@ -9,11 +9,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private static config: Record<'id' | 'name', string> = {
-    id: '1',
-    name: 'EstimateUai',
-  };
-
-  public title: string =
-    AppComponent.config.name + ' ' + AppComponent.config.id;
+  public title = 'EstimateUai';
 }
