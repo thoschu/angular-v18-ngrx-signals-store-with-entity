@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "eslint": "npx eslint .",
-    "prettier:watch": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
+    "onchange": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
     "prepare": "husky"
