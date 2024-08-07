@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "eslint": "npx eslint .",
     "prettier:watch": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
@@ -44,8 +45,12 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.8",
     "prettier": "3.3.3",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,css,scss,html}": "prettier --write"
   }
 }
