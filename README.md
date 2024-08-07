@@ -1,3 +1,5 @@
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 # EstimateUai
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
@@ -29,12 +31,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Info
 
 ### Prettier
++ Prettier for formatting and linters for catching bugs!
 
 > - https://prettier.io/docs/en/install.html
 > 
 > - https://github.com/prettier
->
-> > npm install --save-dev --save-exact prettier
 >
 > > npx prettier ./src/main.ts
 >
@@ -57,5 +58,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 > 
 > > npx husky init
 >
-
-### ESLint
