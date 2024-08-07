@@ -31,6 +31,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Info
 
 ### Prettier
+
 + Prettier for formatting and linters for catching bugs!
 
 > - https://prettier.io/docs/en/install.html
