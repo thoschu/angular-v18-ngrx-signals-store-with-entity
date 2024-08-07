@@ -31,7 +31,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Info
 
-### Angular without ZoneJS (Zoneless)
+### Web-Worker
 
-> - https://angular.dev/guide/experimental/zoneless#enabling-zoneless-in-an-application
-> 
+> ng g web-worker app
