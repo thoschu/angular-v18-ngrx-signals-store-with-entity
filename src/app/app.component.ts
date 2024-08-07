@@ -5,12 +5,12 @@ import {
   effect,
   EffectRef,
   Injector,
-  NgZone,
   Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -26,25 +26,10 @@ export class AppComponent {
   protected doubleCounter: Signal<number> = computed(() => this.counter() * 2);
 
   constructor(
-    private readonly ngZone: NgZone,
-    private injector: Injector,
+    private readonly injector: Injector,
+    private readonly appService: AppService,
   ) {
     this.counter.set(1);
-
-    // effect(() => {
-    //   const val: number = this.counter() * 10;
-    //   console.info(val);
-    // }, {});
-
-    this.ngZone.onMicrotaskEmpty.subscribe((): void => {
-      console.log('onMicrotaskEmpty');
-    });
-
-    // ngZone.runOutsideAngular((): void => {
-    //   setInterval((): void => {
-    //     this.counter.set(this.counter() + 1);
-    //   }, 3000);
-    // });
   }
 
   private unusedButtonClick(): void {
@@ -72,16 +57,4 @@ export class AppComponent {
 
     this.unusedButtonClick();
   }
-}
-
-if (typeof Worker !== 'undefined') {
-  // Create a new
-  const worker = new Worker(new URL('./app.worker', import.meta.url));
-  worker.onmessage = ({ data }) => {
-    console.log(`page got message: ${data}`);
-  };
-  worker.postMessage('hello');
-} else {
-  // Web Workers are not supported in this environment.
-  // You should add a fallback so that your program still executes correctly.
 }

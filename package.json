@@ -12,7 +12,8 @@
     "onchange": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "json-server": "npx json-server db.json5"
   },
   "private": true,
   "dependencies": {
