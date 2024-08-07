@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,10 @@ import { RouterOutlet } from '@angular/router'
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'estimateuai'
+  private static config: Record<'id' | 'name', string> = {
+    id: '1',
+    name: 'EstimateUai',
+  };
+
+  public title: string = AppComponent.config.name;
 }
