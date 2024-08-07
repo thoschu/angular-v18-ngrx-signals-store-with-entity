@@ -51,6 +51,6 @@
     "typescript-eslint": "8.0.0"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,css,scss,html}": "prettier --write"
+    "*.{js,ts,jsx,tsx,css,scss,html}": "npm run prettier:write"
   }
 }
