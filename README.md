@@ -58,3 +58,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 > 
 > > npx husky init
 >
+
+### ESLint
+
+> - https://eslint.org/
+> 
+> - https://github.com/lint-staged/lint-staged
+>
+> > npm init @eslint/config@latest
+> 
