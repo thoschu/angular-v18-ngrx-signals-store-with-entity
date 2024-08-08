@@ -2,24 +2,30 @@
 
 import { setBigInt } from './big-int';
 
-addEventListener('message', ({ data }: Record<'data', number>): void => {
-  getData().catch(console.error);
+addEventListener(
+  'message',
+  async ({ data }: Record<'data', number>): Promise<void> => {
+    const result = await getData().catch(console.error);
+    const id: number = setBigInt(data);
 
-  postMessage(setBigInt(data));
-});
+    postMessage({ id, result });
+  },
+);
 
-const getData = async (): Promise<void> => {
+const getData = async (): Promise<unknown> => {
   const url = 'http://localhost:3000/posts';
 
   try {
-    const response = await fetch(url);
+    const response: Response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return Promise.reject(new Error(`Response status: ${response.status}`));
     }
 
-    console.log(await response.json());
-  } catch (error) {
+    return await response.json();
+  } catch (error: unknown) {
     console.error(error);
+
+    return error;
   }
 };
