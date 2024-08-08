@@ -31,6 +31,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Info
 
-### Web-Worker
+### Service-Worker
 
-> ng g web-worker app
+> - https://www.npmjs.com/package/@angular/pwa
+> 
+> > ng add @angular/pwa --project <project-name>
