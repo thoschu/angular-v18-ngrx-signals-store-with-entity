@@ -13,6 +13,7 @@
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
     "prepare": "husky",
+    "http-server": "npx http-server -p 8080 -c-1 dist/estimateuai/browser",
     "json-server": "npx json-server db.json5"
   },
   "private": true,
