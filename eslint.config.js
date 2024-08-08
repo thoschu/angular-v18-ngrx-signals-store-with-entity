@@ -3,10 +3,17 @@ const eslint = require("@eslint/js")
 const tseslint = require("typescript-eslint")
 const angular = require("angular-eslint")
 
+const globals = require("globals")
+
 // https://github.com/wesbos/eslint-config-wesbos/blob/master/.eslintrc.js
 
 module.exports = tseslint.config(
   {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
     ignores: [],
     files: ["**/*.ts"],
     extends: [
