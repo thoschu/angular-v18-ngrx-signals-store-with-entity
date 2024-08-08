@@ -11,11 +11,12 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppService } from './app.service';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, JsonPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +28,7 @@ export class AppComponent {
 
   constructor(
     private readonly injector: Injector,
-    private readonly appService: AppService,
+    protected readonly appService: AppService,
   ) {
     this.counter.set(1);
   }

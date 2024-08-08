@@ -252,6 +252,19 @@
       <p>(read-only):</p>
       <p>{{ doubleCounter() }}</p>
       <button (click)="up()">⥣</button>&nbsp;<button (click)="down()">⥥</button>
+      <hr />
+      <div>
+        @if ({ result: appService.data() }; as data) {
+          <h1>{{ data.result.id }}</h1>
+
+          @for (item of data.result.result; track item) {
+            <hr />
+            <p>{{ item.id }}</p>
+            <p>{{ item.title }}</p>
+            <p>{{ item.views }}</p>
+          }
+        }
+      </div>
       <!-- ************************************************ TO HERE up -->
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
