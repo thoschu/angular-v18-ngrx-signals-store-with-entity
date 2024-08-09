@@ -11,10 +11,17 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import { SwUpdate } from '@angular/service-worker';
+import {
+  SwUpdate,
+  // VersionEvent
+} from '@angular/service-worker';
 
 import { AppService } from './app.service';
-import { interval } from 'rxjs';
+import {
+  // filter,
+  interval,
+  // Observable, Subscription, tap, timer
+} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +32,7 @@ import { interval } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  public title = ' EstimateUai ';
+  public title = 'EstimateUai';
   protected counter: WritableSignal<number> = signal<number>(0);
   protected doubleCounter: Signal<number> = computed(
     (): number => this.counter() * 2,
