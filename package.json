@@ -17,6 +17,8 @@
     "json-server": "npx json-server db.json5",
     "start:dev": "npx concurrently \"npm start\" \"npm run json-server\"",
     "start:dev:pwa": "npx concurrently \"npm run build\" \"npm run json-server\" \"npm run http-server\"",
+    "web-push": "npx web-push generate-vapid-keys - json",
+    "dev:server": "node server.js",
     "dev:clean": "npx rimraf ",
     "dev:rimraf:node_modules": "npx rimraf node_modules",
     "dev:rimraf:dist": "npx rimraf dist"
@@ -43,8 +45,11 @@
     "@eslint/js": "^9.8.0",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "18.2.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
+    "express": "^4.19.2",
     "globals": "^15.9.0",
     "husky": "^9.1.4",
     "jasmine-core": "~5.1.0",
@@ -56,7 +61,8 @@
     "lint-staged": "^15.2.8",
     "prettier": "3.3.3",
     "typescript": "~5.5.2",
-    "typescript-eslint": "8.0.0"
+    "typescript-eslint": "8.0.0",
+    "web-push": "^3.6.7"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx,css,scss,html}": "npm run prettier:write"

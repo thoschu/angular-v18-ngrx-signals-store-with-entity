@@ -11,17 +11,19 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import {
-  SwUpdate,
-  // VersionEvent
-} from '@angular/service-worker';
+import { SwPush, SwUpdate, VersionEvent } from '@angular/service-worker';
 
 import { AppService } from './app.service';
 import {
   // filter,
   interval,
-  // Observable, Subscription, tap, timer
+  noop,
+  take,
+  // Observable, Subscription,
+  tap,
+  timer,
 } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -41,20 +43,40 @@ export class AppComponent {
   constructor(
     private readonly injector: Injector,
     private readonly swUpdate: SwUpdate,
+    private readonly swPush: SwPush,
+    private readonly http: HttpClient,
     protected readonly appService: AppService,
   ) {
     this.counter.set(1);
+    const swUpdateVersionUpdates = this.swUpdate.versionUpdates;
+
+    swUpdateVersionUpdates
+      .pipe(
+        take(1),
+        tap((versionEvent: VersionEvent): void => {
+          if ('version' in versionEvent && versionEvent.version) {
+            console.log(`App-Version: ${versionEvent.version.hash}`);
+          }
+        }),
+      )
+      .subscribe(noop);
 
     interval(4000).subscribe((): void => {
       this.swUpdate
         .checkForUpdate()
         .then((isUpdateAvailable: boolean): void => {
           if (isUpdateAvailable) {
-            document.location.reload();
+            swUpdate.activateUpdate().then((activated: boolean): void => {
+              console.log(activated);
+              if (activated) {
+                timer(2000).subscribe((): void => {
+                  document.location.reload();
+                });
+              }
+            });
           }
         })
-        .catch(console.error)
-        .finally(console.info);
+        .catch(console.error);
     });
 
     // this.swUpdate.versionUpdates
@@ -89,6 +111,39 @@ export class AppComponent {
     //       document.location.reload();
     //     }
     //   });
+
+    this.swPush.messages.subscribe((message: object): void => {
+      console.log(message);
+    });
+  }
+
+  async ngOnInit() {
+    try {
+      const pushSubscription = await this.swPush
+        .requestSubscription({
+          serverPublicKey:
+            'BDccSyJRpMCjcqMNh1M4ewhaQTCXroSN-RAXzEKf6_ftxMYsSMyLjfrc5depRLajiFhKPZbDW4FFwXnBNfFKhdY',
+        })
+        .then((pushSubscription: PushSubscription) => {
+          console.log('*************');
+          console.log(pushSubscription);
+          timer(7000).subscribe(() => {
+            // TODO: Send to server.
+            console.log('#############');
+
+            this.http
+              .post('http://localhost:3333/subscribe', pushSubscription)
+              .subscribe(noop);
+          });
+        })
+        .catch((err) =>
+          console.error('Could not subscribe to notifications', err),
+        );
+
+      console.log(pushSubscription);
+    } catch (err) {
+      console.error('Could not subscribe due to:', err);
+    }
   }
 
   private unusedButtonClick(): void {
