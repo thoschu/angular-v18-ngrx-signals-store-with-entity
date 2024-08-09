@@ -122,7 +122,7 @@ export class AppComponent {
       const pushSubscription = await this.swPush
         .requestSubscription({
           serverPublicKey:
-            'BDccSyJRpMCjcqMNh1M4ewhaQTCXroSN-RAXzEKf6_ftxMYsSMyLjfrc5depRLajiFhKPZbDW4FFwXnBNfFKhdY',
+            'BAc4otAh6wIBNb8NLL6qstPMR9tQothyA5bVx7W6uSAfWu7zAJ4kzdoBtZPrTt1pvc79bRpLnQbPYSnyD3l43e4',
         })
         .then((pushSubscription: PushSubscription) => {
           console.log('*************');

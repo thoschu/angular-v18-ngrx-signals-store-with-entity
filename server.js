@@ -39,7 +39,7 @@ app.post("/subscribe", (req, res) => {
     notification: {
       title: "Angular News",
       body: "Newsletter Available!",
-      icon: "assets/main-page-logo-small-hat.png",
+      icon: "https://cdn-icons-png.flaticon.com/512/943/943593.png",
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -53,8 +53,6 @@ app.post("/subscribe", (req, res) => {
       ],
     },
   }
-
-  res.status(201).json({})
 
   webpush
     .sendNotification(subscription, JSON.stringify(notificationPayload))
