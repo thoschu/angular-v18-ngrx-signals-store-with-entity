@@ -2,6 +2,7 @@
   "name": "estimateuai",
   "version": "0.0.1",
   "scripts": {
+    "prepare": "husky",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -12,9 +13,13 @@
     "onchange": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
-    "prepare": "husky",
     "http-server": "npx http-server -p 8080 -c-1 dist/estimateuai/browser",
-    "json-server": "npx json-server db.json5"
+    "json-server": "npx json-server db.json5",
+    "start:dev": "npx concurrently \"npm start\" \"npm run json-server\"",
+    "start:dev:pwa": "npx concurrently \"npm run build\" \"npm run json-server\" \"npm run http-server\"",
+    "dev:clean": "npx rimraf ",
+    "dev:rimraf:node_modules": "npx rimraf node_modules",
+    "dev:rimraf:dist": "npx rimraf dist"
   },
   "private": true,
   "dependencies": {
