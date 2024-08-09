@@ -5,6 +5,7 @@ import {
   effect,
   EffectRef,
   Injector,
+  OnInit,
   Signal,
   signal,
   WritableSignal,
@@ -33,7 +34,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'EstimateUai';
   protected counter: WritableSignal<number> = signal<number>(0);
   protected doubleCounter: Signal<number> = computed(
@@ -119,28 +120,21 @@ export class AppComponent {
 
   async ngOnInit() {
     try {
-      const pushSubscription = await this.swPush
+      await this.swPush
         .requestSubscription({
           serverPublicKey:
-            'BAc4otAh6wIBNb8NLL6qstPMR9tQothyA5bVx7W6uSAfWu7zAJ4kzdoBtZPrTt1pvc79bRpLnQbPYSnyD3l43e4',
+            'BPk3mjsMjvqDBRuC7ytmc7ab8Q1uE1K1eR2v5NI0r2iJSV0J_h5fZqAXsDVdYwk6XoteNdynCEnRn8KbtwZHtxA',
         })
-        .then((pushSubscription: PushSubscription) => {
-          console.log('*************');
-          console.log(pushSubscription);
-          timer(7000).subscribe(() => {
-            // TODO: Send to server.
-            console.log('#############');
-
+        .then((pushSubscription: PushSubscription): void => {
+          timer(7000).subscribe((): void => {
             this.http
               .post('http://localhost:3333/subscribe', pushSubscription)
-              .subscribe(noop);
+              .subscribe(console.info);
           });
         })
         .catch((err) =>
           console.error('Could not subscribe to notifications', err),
         );
-
-      console.log(pushSubscription);
     } catch (err) {
       console.error('Could not subscribe due to:', err);
     }

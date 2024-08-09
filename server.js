@@ -1,4 +1,3 @@
-// Pull in dependencies
 const express = require("express")
 const cors = require("cors")
 const webpush = require("web-push")
@@ -16,8 +15,8 @@ app.use(cors())
 // Use body parser which we will use to parse request body that sending from client.
 app.use(bodyParser.json())
 
-// We will store our client files in ./client directory.
-app.use(express.static(path.join(__dirname, "client")))
+// We will store our client files in ./dist directory.
+// app.use(express.static(path.join(__dirname, "dist")))
 
 const publicVapidKey = vapidKeys.publicKey
 const privateVapidKey = vapidKeys.privateKey
@@ -32,8 +31,6 @@ webpush.setVapidDetails(
 // Create route for allow client to subscribe to push notification.
 app.post("/subscribe", (req, res) => {
   const subscription = req.body
-
-  console.log(subscription)
 
   const notificationPayload = {
     notification: {
@@ -56,13 +53,13 @@ app.post("/subscribe", (req, res) => {
 
   webpush
     .sendNotification(subscription, JSON.stringify(notificationPayload))
-    .then((res) => {
-      res.status(201).json(res)
+    .then((result) => {
+      res.status(201).json(result)
     })
     .catch(console.error)
 })
 
 app.listen(PORT, () => {
   console.log("Server started on port " + PORT)
-  console.log("publicVapidKey: " + publicVapidKey)
+  console.log("vapidKeys: " + JSON.stringify(vapidKeys))
 })
