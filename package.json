@@ -19,6 +19,7 @@
     "dev:start:push-api": "npx concurrently \"npm run build\" \"npm run json-server\" \"npm run http-server\"",
     "dev:web-push": "npx web-push generate-vapid-keys - json",
     "dev:server": "node server.js",
+    "dev:ngrok": "npx ngrok http 4200",
     "dev:clean": "npx rimraf ",
     "dev:rimraf:node_modules": "npx rimraf node_modules",
     "dev:rimraf:dist": "npx rimraf dist"
