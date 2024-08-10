@@ -13,8 +13,6 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { SwPush, SwUpdate, VersionEvent } from '@angular/service-worker';
-
-import { AppService } from './app.service';
 import {
   // filter,
   interval,
@@ -25,6 +23,8 @@ import {
   timer,
 } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
       await this.swPush
         .requestSubscription({
           serverPublicKey:
-            'BPk3mjsMjvqDBRuC7ytmc7ab8Q1uE1K1eR2v5NI0r2iJSV0J_h5fZqAXsDVdYwk6XoteNdynCEnRn8KbtwZHtxA',
+            'BMivR7DA9tPhrxvpl7rta4q3nAyiPEOjCQThITz-iEkB8RYh6Dr3YSlC1b4entgVjIuTdw7ynMH3wK2xSeq8JRo',
         })
         .then((pushSubscription: PushSubscription): void => {
           timer(7000).subscribe((): void => {
