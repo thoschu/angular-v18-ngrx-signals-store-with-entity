@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   effect,
+  EffectCleanupRegisterFn,
   EffectRef,
   Injector,
   OnInit,
@@ -116,6 +117,11 @@ export class AppComponent implements OnInit {
     this.swPush.messages.subscribe((message: object): void => {
       console.log('*** swPush: ');
       console.dir(message);
+    });
+
+    effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
+      console.dir(effectCleanupRegisterFn);
+      console.log(`${this.counter()}`);
     });
   }
 
