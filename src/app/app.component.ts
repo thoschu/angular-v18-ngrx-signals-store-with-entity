@@ -114,7 +114,8 @@ export class AppComponent implements OnInit {
     //   });
 
     this.swPush.messages.subscribe((message: object): void => {
-      console.log(message);
+      console.log('*** swPush: ');
+      console.dir(message);
     });
   }
 
@@ -123,7 +124,7 @@ export class AppComponent implements OnInit {
       await this.swPush
         .requestSubscription({
           serverPublicKey:
-            'BMivR7DA9tPhrxvpl7rta4q3nAyiPEOjCQThITz-iEkB8RYh6Dr3YSlC1b4entgVjIuTdw7ynMH3wK2xSeq8JRo',
+            'BFiacf4iUXswBl8fe7jcZJ68n_EdTK6U-9hmjZr-yn1XIFZtGbMSPU5MTpdPr7MwgNiXlFGvR3Lm4YEXWgTCWuo',
         })
         .then((pushSubscription: PushSubscription): void => {
           timer(7000).subscribe((): void => {

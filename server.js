@@ -6,7 +6,12 @@ const webpush = require("web-push")
 const bodyParser = require("body-parser")
 const path = require("path")
 
-const vapidKeys = webpush.generateVAPIDKeys()
+const vapidKeys =
+  {
+    publicKey: process.env.PUBLIC_KEY,
+    privateKey: process.env.PRIVATE_KEY,
+  } || webpush.generateVAPIDKeys()
+
 const PORT = process.env.EXPRESS_PORT || 3000
 
 // Create express app.
@@ -32,8 +37,6 @@ webpush.setVapidDetails(process.env.MAILTO, publicVapidKey, privateVapidKey)
 app.post("/subscribe", (req, res) => {
   const subscription = req.body
 
-  console.dir(subscription)
-
   subscriptions.add(subscription)
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Notification
@@ -41,7 +44,7 @@ app.post("/subscribe", (req, res) => {
     notification: {
       title: "Angular News",
       body: "Newsletter Available!",
-      icon: "https://cdn-icons-png.flaticon.com/512/943/943593.png",
+      icon: process.env.NOTIFICATION_ICON,
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -55,10 +58,6 @@ app.post("/subscribe", (req, res) => {
       ],
     },
   }
-
-  subscriptions.forEach((value) => {
-    console.log(value)
-  })
 
   webpush
     .sendNotification(subscription, JSON.stringify(notificationPayload), {})
@@ -75,26 +74,29 @@ app.listen(PORT, () => {
   setInterval(() => {
     const notificationPayload = {
       notification: {
-        title: "Angular Update !!!",
-        body: "Update Available...",
-        data: {},
-        requireInteraction: true,
-        renotify: true,
+        title: "Angular Update",
+        body: "UPDATE Available!",
+        icon: "https://cdn-icons-png.flaticon.com/512/943/943793.png",
+        data: {
+          dateOfArrival: Date.now(),
+          resource: `/foo/bar/325`,
+        },
       },
     }
 
     subscriptions.forEach((subscription) => {
-      console.log(subscription)
+      console.log(subscriptions.size)
 
       webpush
         .sendNotification(subscription, JSON.stringify(notificationPayload))
         .then((result) => {
-          console.log(result)
+          console.log(result.statusCode)
+          console.log(result.statusCode.location ?? "")
         })
         .catch((err) => {
           console.error(err)
           subscriptions.delete(subscription)
         })
     })
-  }, 10000)
+  }, 15000)
 })
