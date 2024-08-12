@@ -1,15 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   EffectCleanupRegisterFn,
   EffectRef,
+  inject,
   Injector,
   OnInit,
   Signal,
-  signal,
-  WritableSignal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
@@ -26,6 +24,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 
 import { AppService } from './app.service';
+import { AppStore } from './app.store';
 
 @Component({
   selector: 'app-root',
@@ -36,11 +35,10 @@ import { AppService } from './app.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  public title = 'EstimateUai';
-  protected counter: WritableSignal<number> = signal<number>(0);
-  protected doubleCounter: Signal<number> = computed(
-    (): number => this.counter() * 2,
-  );
+  #appStore = inject(AppStore);
+  public title = this.#appStore.title();
+  protected counter: Signal<number> = this.#appStore.counter;
+  protected doubleCounter: Signal<number> = this.#appStore.doubleCounter;
 
   constructor(
     private readonly injector: Injector,
@@ -49,7 +47,7 @@ export class AppComponent implements OnInit {
     private readonly http: HttpClient,
     protected readonly appService: AppService,
   ) {
-    this.counter.set(1);
+    this.#appStore.setCounter(1);
     const swUpdateVersionUpdates = this.swUpdate.versionUpdates;
 
     swUpdateVersionUpdates
@@ -80,39 +78,6 @@ export class AppComponent implements OnInit {
         })
         .catch(console.error);
     });
-
-    // this.swUpdate.versionUpdates
-    //   .pipe(
-    //     tap(console.log),
-    //     tap((versionEvent: VersionEvent): void => {
-    //       if ('version' in versionEvent && versionEvent.version) {
-    //         console.log(`App-Version: ${versionEvent.version.hash}`);
-    //       }
-    //     }),
-    //     filter(
-    //       (versionEvent: VersionEvent): boolean =>
-    //         versionEvent.type === 'VERSION_READY',
-    //     ),
-    //   )
-    //   .subscribe((versionEvent: VersionEvent): void => {
-    //     let text = `New version for the app is available. Do you want to reload?`;
-    //
-    //     if (
-    //       'currentVersion' in versionEvent &&
-    //       versionEvent.currentVersion &&
-    //       'latestVersion' in versionEvent &&
-    //       versionEvent.latestVersion
-    //     ) {
-    //       const latestVersion = `${versionEvent.latestVersion.hash}`,
-    //         currentVersion = `${versionEvent.currentVersion.hash}`;
-    //
-    //       text = `New version: ${latestVersion} for the app is available. Do you want to reload version: ${currentVersion} ?`;
-    //     }
-    //
-    //     if (confirm(text)) {
-    //       document.location.reload();
-    //     }
-    //   });
 
     this.swPush.messages.subscribe((message: object): void => {
       console.log('*** swPush: ');
@@ -161,14 +126,13 @@ export class AppComponent implements OnInit {
   }
 
   protected up(): void {
-    this.counter.update((counter: number): number => ++counter);
+    this.#appStore.incrementCounter();
+
     this.unusedButtonClick();
   }
 
   protected down(): void {
-    this.counter.update((): number => {
-      return this.counter() - 1;
-    });
+    this.#appStore.decrementCounter();
 
     this.unusedButtonClick();
   }

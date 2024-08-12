@@ -37,7 +37,7 @@ export class AppService {
     this.postsMessage();
   }
 
-  public get data() {
+  public get data(): WritableSignal<All> {
     return this._data;
   }
 
