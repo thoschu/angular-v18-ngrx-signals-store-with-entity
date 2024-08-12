@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import {
+  // getState,
   patchState,
   signalStore,
   withComputed,
@@ -7,7 +8,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { computed, inject } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import { dec, inc } from 'ramda';
 
 interface AppState {
@@ -58,6 +59,10 @@ export const AppStore = signalStore(
   withHooks({
     onInit({ loadAll }: { loadAll: () => Promise<unknown> }) {
       loadAll().then((r) => console.log(r));
+
+      effect(() => {
+        // console.log('counter state', state);
+      });
     },
     onDestroy() {
       console.log('on destroy');
