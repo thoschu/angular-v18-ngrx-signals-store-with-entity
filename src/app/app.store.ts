@@ -79,6 +79,20 @@ export const AppStore = signalStore(
               patchState(store, { comments });
             });
         },
+        getPosts: rxMethod<string>(
+          pipe(
+            switchMap((path: string) =>
+              httpClient.get<Comments>('http://localhost:3000/' + path).pipe(
+                tapResponse(
+                  (comments: Comments) => {
+                    patchState(store, { comments });
+                  },
+                  (err: Error) => console.error(err),
+                ),
+              ),
+            ),
+          ),
+        ),
         _loadPosts() {
           return httpClient
             .get<Posts>('http://localhost:3000/posts')
@@ -112,7 +126,11 @@ export const AppStore = signalStore(
   withHooks({
     onInit(store) {
       store._loadComments();
+      store.getComments();
+
       store._loadPosts();
+      store.getPosts('posts');
+
       store._loadProfile();
 
       effect(() => {
