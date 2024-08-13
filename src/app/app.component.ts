@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
+  EffectCleanupRegisterFn,
   EffectRef,
   inject,
   Injector,
@@ -30,10 +31,13 @@ export class AppComponent {
   constructor(private readonly injector: Injector) {
     this.#appStore.setCounter(1);
 
-    // effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
-    //   console.dir(effectCleanupRegisterFn);
-    //   console.log(`${this.counter()}`);
-    // });
+    effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
+      console.log(`${this.counter()}`);
+
+      effectCleanupRegisterFn(() => {
+        console.log('######');
+      });
+    });
   }
 
   private unusedButtonClick(): void {
