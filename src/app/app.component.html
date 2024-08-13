@@ -254,10 +254,8 @@
       <button (click)="up()">⥣</button>&nbsp;<button (click)="down()">⥥</button>
       <hr />
       <div>
-        @if ({ result: appService.data() }; as data) {
-          <h1>{{ data.result.id }}</h1>
-
-          @for (item of data.result.result; track item) {
+        @if ({ result: posts() }; as data) {
+          @for (item of data.result; track item) {
             <hr />
             <p>{{ item.id }}</p>
             <p>{{ item.title }}</p>

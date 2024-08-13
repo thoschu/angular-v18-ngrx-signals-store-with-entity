@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
-  EffectCleanupRegisterFn,
   EffectRef,
   inject,
   Injector,
@@ -12,19 +11,10 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { SwPush, SwUpdate, VersionEvent } from '@angular/service-worker';
-import {
-  // filter,
-  interval,
-  noop,
-  take,
-  // Observable, Subscription,
-  tap,
-  timer,
-} from 'rxjs';
+import { interval, noop, take, tap, timer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { AppService } from './app.service';
-import { AppStore } from './app.store';
+import { AppStore, Posts } from './app.store';
 
 @Component({
   selector: 'app-root',
@@ -39,13 +29,13 @@ export class AppComponent implements OnInit {
   public title = this.#appStore.title();
   protected counter: Signal<number> = this.#appStore.counter;
   protected doubleCounter: Signal<number> = this.#appStore.doubleCounter;
+  protected posts: Signal<Posts> = this.#appStore.posts;
 
   constructor(
     private readonly injector: Injector,
     private readonly swUpdate: SwUpdate,
     private readonly swPush: SwPush,
     private readonly http: HttpClient,
-    protected readonly appService: AppService,
   ) {
     this.#appStore.setCounter(1);
     const swUpdateVersionUpdates = this.swUpdate.versionUpdates;
@@ -84,10 +74,10 @@ export class AppComponent implements OnInit {
       console.dir(message);
     });
 
-    effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
-      console.dir(effectCleanupRegisterFn);
-      console.log(`${this.counter()}`);
-    });
+    // effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
+    //   console.dir(effectCleanupRegisterFn);
+    //   console.log(`${this.counter()}`);
+    // });
   }
 
   async ngOnInit() {

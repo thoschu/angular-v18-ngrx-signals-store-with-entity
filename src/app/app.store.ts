@@ -15,12 +15,12 @@ import { dec, inc } from 'ramda';
 import { pipe, switchMap } from 'rxjs';
 
 type Comment = Record<'id' | 'text' | 'postId', string>;
-type Comments = Comment[];
+export type Comments = Comment[];
 
 type Post = Record<'id' | 'title', string> & Record<'views', number>;
-type Posts = Post[];
+export type Posts = Post[];
 
-type Profile = Record<'name', string> & Record<'range', number>;
+export type Profile = Record<'name', string> & Record<'range', number>;
 
 interface AppState {
   title: string;
@@ -38,7 +38,7 @@ const initialAppState: AppState = {
   comments: [],
   posts: [],
   profile: {
-    name: '1',
+    name: 'none',
     range: 0,
   },
 };
@@ -53,11 +53,11 @@ export const AppStore = signalStore(
   withMethods(
     (store, httpClient: HttpClient = inject<HttpClient>(HttpClient)) => {
       return {
-        async loadAll() {
-          // const appResult = await appService.getItems();
-          // patchState(store, { app: '####' });
-        },
-        getComments: rxMethod<void>(
+        // async loadAll() {
+        //   // const appResult = await appService.getItems();
+        //   // patchState(store, { app: '####' });
+        // },
+        _loadComments: rxMethod<void>(
           pipe(
             switchMap(() =>
               httpClient.get<Comments>('http://localhost:3000/comments').pipe(
@@ -71,21 +71,13 @@ export const AppStore = signalStore(
             ),
           ),
         ),
-        _loadComments() {
-          return httpClient
-            .get<Comments>('http://localhost:3000/comments')
-            .pipe()
-            .subscribe((comments: Comments) => {
-              patchState(store, { comments });
-            });
-        },
-        getPosts: rxMethod<string>(
+        _loadPosts: rxMethod<string>(
           pipe(
             switchMap((path: string) =>
-              httpClient.get<Comments>('http://localhost:3000/' + path).pipe(
+              httpClient.get<Posts>('http://localhost:3000/' + path).pipe(
                 tapResponse(
-                  (comments: Comments) => {
-                    patchState(store, { comments });
+                  (posts: Posts) => {
+                    patchState(store, { posts });
                   },
                   (err: Error) => console.error(err),
                 ),
@@ -93,27 +85,26 @@ export const AppStore = signalStore(
             ),
           ),
         ),
-        _loadPosts() {
-          return httpClient
-            .get<Posts>('http://localhost:3000/posts')
-            .pipe()
-            .subscribe((posts: Posts) => {
-              patchState(store, { posts });
-            });
-        },
-        _loadProfile() {
-          return httpClient
-            .get<Profile>('http://localhost:3000/profile')
-            .pipe()
-            .subscribe((profile: Profile) => {
-              patchState(store, { profile });
-            });
-        },
+        _loadProfile: rxMethod<void>(
+          pipe(
+            switchMap(() =>
+              httpClient.get<Profile>('http://localhost:3000/profile').pipe(
+                tapResponse(
+                  (profile: Profile) => {
+                    patchState(store, { profile });
+                  },
+                  (err: Error) => console.error(err),
+                ),
+              ),
+            ),
+          ),
+        ),
         setCounter(counter: number): void {
           patchState(store, { counter });
         },
         decrementCounter(): void {
-          const counter: number = dec(store.counter());
+          const count: number = store.counter();
+          const counter: number = dec(count);
 
           patchState(store, { counter });
         },
@@ -126,11 +117,7 @@ export const AppStore = signalStore(
   withHooks({
     onInit(store) {
       store._loadComments();
-      store.getComments();
-
-      store._loadPosts();
-      store.getPosts('posts');
-
+      store._loadPosts('posts');
       store._loadProfile();
 
       effect(() => {
