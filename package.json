@@ -15,12 +15,9 @@
     "prettier:write": "prettier --write --ignore-unknown src",
     "dev:http-server": "npx http-server -p 8080 -c-1 dist/estimateuai/browser",
     "dev:json-server": "npx json-server db.json5",
-    "dev:start": "npx concurrently \"npm start\" \"npm run json-server\"",
-    "dev:start:push-api": "npx concurrently \"npm run build\" \"npm run dev:json-server\" \"npm run dev:http-server\" \"npm run dev:server\"",
+    "dev:start": "npx concurrently \"npm start\" \"npm run dev:json-server\"",
     "dev:web-push": "npx web-push generate-vapid-keys - json",
-    "dev:server": "node server.js",
     "dev:ngrok": "npx ngrok http 4200",
-    "dev:clean": "npx rimraf ",
     "dev:rimraf:node_modules": "npx rimraf node_modules",
     "dev:rimraf:dist": "npx rimraf dist"
   },

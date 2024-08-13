@@ -30,8 +30,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": [],
-            "webWorkerTsConfig": "tsconfig.worker.json"
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -48,7 +47,6 @@
                 }
               ],
               "outputHashing": "all",
-              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -89,8 +87,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": [],
-            "webWorkerTsConfig": "tsconfig.worker.json"
+            "scripts": []
           }
         },
         "lint": {
