@@ -2,41 +2,55 @@ import {
   getState,
   patchState,
   signalStore,
-  type,
+  // type,
+  withComputed,
   withHooks,
   withMethods,
+  withState,
 } from '@ngrx/signals';
-import { addEntity, withEntities } from '@ngrx/signals/entities';
-import { effect, EffectRef } from '@angular/core';
+import {
+  // addEntity,
+  withEntities,
+} from '@ngrx/signals/entities';
+import { computed, effect, EffectRef } from '@angular/core';
+
+export type Counter = Record<'id', string> | Record<'counter', number>;
+export type Counters = Counter[];
 
 export interface AppState {
   id: number;
   title: string;
+  // items: Counters;
+  loading: boolean;
 }
 
 const initialAppState: AppState = {
-  id: 1,
-  title: 'EstimateUai',
+  id: 0,
+  title: 'EstimateAi',
+  // items: [],
+  loading: false,
 };
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
-  // withState(initialAppState),
-  // withEntities<AppState>(),
-  withEntities({ entity: type<AppState>(), collection: 'app' }),
-  // withComputed(({ title, counter }) => ({
-  //   uppercaseTitle: computed(() => title().toUpperCase()),
-  //   doubleCounter: computed((): number => counter() * 2),
-  // })),
-  // withComputed(({ appEntities }) => ({
-  //   // uppercaseTitle: computed(() => title().toUpperCase()),
-  //   // doubleCounter: computed((): number => counter() * 2),
-  // })),
+  withState(initialAppState),
+  withEntities<Counter>(),
+  //withEntities({ entity: type<Counter>(), collection: 'app' }),
+  withComputed(({ title, entities }) => ({
+    uppercaseTitle: computed(() => title().toUpperCase()),
+    counters: computed(() =>
+      entities().push({
+        id: '1',
+        counter: 1,
+      }),
+    ),
+  })),
   withMethods((store) => {
     //  httpClient: HttpClient = inject<HttpClient>(HttpClient)
+    console.log(store);
     return {
-      addAppState(appState: AppState): void {
-        patchState(store, addEntity(appState, { collection: 'app' }));
+      updateTitle(title: string): void {
+        patchState(store, { title });
       },
       // _loadComments: rxMethod<void>(
       //   pipe(
@@ -96,8 +110,6 @@ export const AppStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      store.addAppState(initialAppState);
-
       const effectRef: EffectRef = effect(() => {
         console.log('[effect] app state', getState(store));
         console.dir(effectRef);

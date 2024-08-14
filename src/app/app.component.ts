@@ -24,15 +24,18 @@ export class AppComponent {
   readonly #appStore = inject(AppStore);
   readonly #counterObservable: Observable<number> = interval(500);
 
-  public readonly title = 'EstimateUai';
+  public readonly title = this.#appStore.uppercaseTitle;
   public readonly runner: Signal<number> = toSignal(this.#counterObservable, {
     initialValue: 0,
   });
 
   constructor() {
-    console.log(this.#appStore);
-    console.log(this.#appStore.appIds());
-    console.log(this.#appStore.appEntities());
-    console.log(this.#appStore.appEntityMap());
+    setTimeout(() => {
+      this.#appStore.updateTitle('EstimateUai');
+    }, 5000);
+
+    console.log(this.#appStore.ids);
+    console.log(this.#appStore.entities());
+    console.log(this.#appStore.entityMap());
   }
 }
