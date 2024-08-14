@@ -34,7 +34,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Signals
 
 > - https://angular.dev/guide/signals
+> - https://ngrx.io/guide/signals/signal-store/entity-management
 
-![ngrx-signals-1](public/ngrx-signals-1.png)
+![ngrx-signals-1](public/ngrx-signals-3.png)
 
-![ngrx-signals-1](public/ngrx-signals-2.png)
