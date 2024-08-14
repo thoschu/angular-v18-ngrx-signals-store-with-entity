@@ -1,17 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  EffectCleanupRegisterFn,
-  EffectRef,
-  inject,
-  Injector,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 
-import { AppStore, Posts } from './app.store';
+import { AppStore } from './app.store';
 
 @Component({
   selector: 'app-root',
@@ -23,45 +14,10 @@ import { AppStore, Posts } from './app.store';
 })
 export class AppComponent {
   #appStore = inject(AppStore);
-  public title = this.#appStore.title();
-  protected counter: Signal<number> = this.#appStore.counter;
-  protected doubleCounter: Signal<number> = this.#appStore.doubleCounter;
-  protected posts: Signal<Posts> = this.#appStore.posts;
 
-  constructor(private readonly injector: Injector) {
-    this.#appStore.setCounter(1);
+  title = 'EstimateUai';
 
-    effect((effectCleanupRegisterFn: EffectCleanupRegisterFn): void => {
-      console.log(`${this.counter()}`);
-
-      effectCleanupRegisterFn(() => {
-        console.log('######');
-      });
-    });
-  }
-
-  private unusedButtonClick(): void {
-    const effectRef: EffectRef = effect(
-      (): void => {
-        const val: number = this.counter() * 10;
-        console.info(val);
-        effectRef.destroy();
-      },
-      {
-        injector: this.injector,
-      },
-    );
-  }
-
-  protected up(): void {
-    this.#appStore.incrementCounter();
-
-    this.unusedButtonClick();
-  }
-
-  protected down(): void {
-    this.#appStore.decrementCounter();
-
-    this.unusedButtonClick();
+  constructor() {
+    console.log(this.#appStore);
   }
 }

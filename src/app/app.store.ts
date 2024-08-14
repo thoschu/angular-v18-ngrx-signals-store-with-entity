@@ -1,127 +1,103 @@
-import { HttpClient } from '@angular/common/http';
-import { tapResponse } from '@ngrx/operators';
 import {
   getState,
   patchState,
   signalStore,
-  withComputed,
+  type,
   withHooks,
   withMethods,
-  withState,
 } from '@ngrx/signals';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { computed, effect, inject } from '@angular/core';
-import { dec, inc } from 'ramda';
-import { pipe, switchMap } from 'rxjs';
-
-type Comment = Record<'id' | 'text' | 'postId', string>;
-export type Comments = Comment[];
-
-type Post = Record<'id' | 'title', string> & Record<'views', number>;
-export type Posts = Post[];
-
-export type Profile = Record<'name', string> & Record<'range', number>;
+import { addEntity, withEntities } from '@ngrx/signals/entities';
+import { effect } from '@angular/core';
 
 interface AppState {
+  id: number;
   title: string;
-  counter: number;
-  isLoading: boolean;
-  comments: Comments;
-  posts: Posts;
-  profile: Profile;
 }
 
-const initialAppState: AppState = {
-  title: 'EstimateUai',
-  counter: 0,
-  isLoading: false,
-  comments: [],
-  posts: [],
-  profile: {
-    name: 'none',
-    range: 0,
-  },
-};
+// const initialAppState: AppState = {
+//   id: 1,
+//   title: 'EstimateUai',
+// };
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
-  withState(initialAppState),
-  withComputed(({ title, counter }) => ({
-    uppercaseTitle: computed(() => title().toUpperCase()),
-    doubleCounter: computed((): number => counter() * 2),
-  })),
-  withMethods(
-    (store, httpClient: HttpClient = inject<HttpClient>(HttpClient)) => {
-      return {
-        // async loadAll() {
-        //   // const appResult = await appService.getItems();
-        //   // patchState(store, { app: '####' });
-        // },
-        _loadComments: rxMethod<void>(
-          pipe(
-            switchMap(() =>
-              httpClient.get<Comments>('http://localhost:3000/comments').pipe(
-                tapResponse(
-                  (comments: Comments) => {
-                    patchState(store, { comments });
-                  },
-                  (err: Error) => console.error(err),
-                ),
-              ),
-            ),
-          ),
-        ),
-        _loadPosts: rxMethod<string>(
-          pipe(
-            switchMap((path: string) =>
-              httpClient.get<Posts>('http://localhost:3000/' + path).pipe(
-                tapResponse(
-                  (posts: Posts) => {
-                    patchState(store, { posts });
-                  },
-                  (err: Error) => console.error(err),
-                ),
-              ),
-            ),
-          ),
-        ),
-        _loadProfile: rxMethod<void>(
-          pipe(
-            switchMap(() =>
-              httpClient.get<Profile>('http://localhost:3000/profile').pipe(
-                tapResponse(
-                  (profile: Profile) => {
-                    patchState(store, { profile });
-                  },
-                  (err: Error) => console.error(err),
-                ),
-              ),
-            ),
-          ),
-        ),
-        setCounter(counter: number): void {
-          patchState(store, { counter });
-        },
-        decrementCounter(): void {
-          const count: number = store.counter();
-          const counter: number = dec(count);
-
-          patchState(store, { counter });
-        },
-        incrementCounter(): void {
-          patchState(store, { counter: inc(store.counter()) });
-        },
-      };
-    },
-  ),
+  // withState(initialAppState),
+  // withEntities<AppState>(),
+  withEntities({ entity: type<AppState>(), collection: 'app' }),
+  // withComputed(({ title, counter }) => ({
+  //   uppercaseTitle: computed(() => title().toUpperCase()),
+  //   doubleCounter: computed((): number => counter() * 2),
+  // })),
+  // withComputed(({ appEntities }) => ({
+  //   // uppercaseTitle: computed(() => title().toUpperCase()),
+  //   // doubleCounter: computed((): number => counter() * 2),
+  // })),
+  withMethods((store) => {
+    //  httpClient: HttpClient = inject<HttpClient>(HttpClient)
+    return {
+      addAppState(appState: AppState): void {
+        patchState(store, addEntity(appState, { collection: 'app' }));
+      },
+      // _loadComments: rxMethod<void>(
+      //   pipe(
+      //     switchMap(() =>
+      //       httpClient.get<Comments>('http://localhost:3000/comments').pipe(
+      //         tapResponse(
+      //           (comments: Comments) => {
+      //             // patchState(store, { comments });
+      //             patchState(
+      //               store,
+      //               updateAllEntities({ comments }, { collection: 'app' }),
+      //             );
+      //           },
+      //           (err: Error) => console.error(err),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      // _loadPosts: rxMethod<string>(
+      //   pipe(
+      //     switchMap((path: string) =>
+      //       httpClient.get<Posts>('http://localhost:3000/' + path).pipe(
+      //         tapResponse(
+      //           (posts: Posts) => {
+      //             // patchState(store, { posts });
+      //             patchState(
+      //               store,
+      //               updateAllEntities({ posts }, { collection: 'app' }),
+      //             );
+      //           },
+      //           (err: Error) => console.error(err),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      // _loadProfile: rxMethod<void>(
+      //   pipe(
+      //     switchMap(() =>
+      //       httpClient.get<Profile>('http://localhost:3000/profile').pipe(
+      //         tapResponse(
+      //           (profile: Profile) => {
+      //             // patchState(store, { profile });
+      //             patchState(
+      //               store,
+      //               updateAllEntities({ profile }, { collection: 'app' }),
+      //             );
+      //           },
+      //           (err: Error) => console.error(err),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+    };
+  }),
   withHooks({
     onInit(store) {
-      store._loadComments();
-      store._loadPosts('posts');
-      store._loadProfile();
-
       effect(() => {
-        console.log('[effect] counter state', getState(store));
+        console.log('[effect] app state', getState(store));
       }); // logs: { count: 2 }
     },
     onDestroy() {

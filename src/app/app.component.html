@@ -247,22 +247,16 @@
       <h1>Hello, {{ title }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
       <hr />
-      <p>(counter):</p>
-      <p>{{ counter() }}</p>
-      <p>(doubleCounter):</p>
-      <p>{{ doubleCounter() }}</p>
-      <button (click)="up()">⥣</button>&nbsp;<button (click)="down()">⥥</button>
-      <hr />
-      <div>
-        @if ({ result: posts() }; as data) {
-          @for (item of data.result; track item) {
-            <hr />
-            <p>{{ item.id }}</p>
-            <p>{{ item.title }}</p>
-            <p>{{ item.views }}</p>
-          }
-        }
-      </div>
+      <!--      <div>-->
+      <!--        @if ({ result: posts() }; as data) {-->
+      <!--          @for (item of data.result; track item) {-->
+      <!--            <hr />-->
+      <!--            <p>{{ item.id }}</p>-->
+      <!--            <p>{{ item.title }}</p>-->
+      <!--            <p>{{ item.views }}</p>-->
+      <!--          }-->
+      <!--        }-->
+      <!--      </div>-->
       <!-- ************************************************ TO HERE up -->
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
