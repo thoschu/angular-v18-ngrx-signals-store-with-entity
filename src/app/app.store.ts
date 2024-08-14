@@ -14,10 +14,10 @@ interface AppState {
   title: string;
 }
 
-// const initialAppState: AppState = {
-//   id: 1,
-//   title: 'EstimateUai',
-// };
+const initialAppState: AppState = {
+  id: 1,
+  title: 'EstimateUai',
+};
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
@@ -96,6 +96,8 @@ export const AppStore = signalStore(
   }),
   withHooks({
     onInit(store) {
+      store.addAppState(initialAppState);
+
       effect(() => {
         console.log('[effect] app state', getState(store));
       }); // logs: { count: 2 }

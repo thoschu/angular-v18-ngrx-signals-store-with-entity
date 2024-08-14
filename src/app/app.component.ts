@@ -19,5 +19,6 @@ export class AppComponent {
 
   constructor() {
     console.log(this.#appStore);
+    console.log(this.#appStore.appEntities());
   }
 }
