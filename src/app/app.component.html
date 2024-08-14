@@ -223,7 +223,7 @@
             gradientTransform="rotate(118.122 171.182 60.81) scale(205.794)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#FF41F8" />
+            <stop stop-color="#FF41F8" offset="0" />
             <stop offset=".707" stop-color="#FF41F8" stop-opacity=".5" />
             <stop offset="1" stop-color="#FF41F8" stop-opacity="0" />
           </radialGradient>
@@ -247,7 +247,9 @@
       <h1>Hello, {{ title }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
       <hr />
-      <h2>{{ counter() }}</h2>
+      <h2>{{ runner() }}</h2>
+      <hr />
+      <app-counter key="xxxx"></app-counter>
       <!--      <div>-->
       <!--        @if ({ result: posts() }; as data) {-->
       <!--          @for (item of data.result; track item) {-->

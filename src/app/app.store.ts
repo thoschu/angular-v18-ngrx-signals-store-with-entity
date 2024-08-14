@@ -7,7 +7,7 @@ import {
   withMethods,
 } from '@ngrx/signals';
 import { addEntity, withEntities } from '@ngrx/signals/entities';
-import { effect } from '@angular/core';
+import { effect, EffectRef } from '@angular/core';
 
 export interface AppState {
   id: number;
@@ -98,9 +98,10 @@ export const AppStore = signalStore(
     onInit(store) {
       store.addAppState(initialAppState);
 
-      effect(() => {
+      const effectRef: EffectRef = effect(() => {
         console.log('[effect] app state', getState(store));
-      }); // logs: { count: 2 }
+        console.dir(effectRef);
+      });
     },
     onDestroy() {
       console.log('on destroy');
