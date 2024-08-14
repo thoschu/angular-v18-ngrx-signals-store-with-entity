@@ -9,7 +9,7 @@ import {
 import { addEntity, withEntities } from '@ngrx/signals/entities';
 import { effect } from '@angular/core';
 
-interface AppState {
+export interface AppState {
   id: number;
   title: string;
 }

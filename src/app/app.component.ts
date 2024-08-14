@@ -6,10 +6,10 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { interval, Observable } from 'rxjs';
 
 import { AppStore } from './app.store';
-import { interval } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  #appStore = inject(AppStore);
-  #counterObservable = interval(2000);
+  readonly #appStore = inject(AppStore);
+  readonly #counterObservable: Observable<number> = interval(500);
 
   public readonly title = 'EstimateUai';
   public readonly counter: Signal<number> = toSignal(this.#counterObservable, {
