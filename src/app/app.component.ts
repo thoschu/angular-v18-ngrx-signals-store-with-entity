@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Signal,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 
 import { AppStore } from './app.store';
+import { interval } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +21,12 @@ import { AppStore } from './app.store';
 })
 export class AppComponent {
   #appStore = inject(AppStore);
+  #counterObservable = interval(2000);
 
-  title = 'EstimateUai';
+  public readonly title = 'EstimateUai';
+  public readonly counter: Signal<number> = toSignal(this.#counterObservable, {
+    initialValue: 0,
+  });
 
   constructor() {
     console.log(this.#appStore);
