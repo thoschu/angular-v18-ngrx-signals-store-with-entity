@@ -20,7 +20,5 @@ export class AppComponent {
   constructor() {
     console.log(this.#appStore);
     console.log(this.#appStore.appEntities());
-    console.log(this.#appStore.appIds());
-    console.log(this.#appStore.appEntityMap());
   }
 }
