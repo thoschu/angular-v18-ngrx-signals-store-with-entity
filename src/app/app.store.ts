@@ -50,6 +50,7 @@ const initialAppState: AppState = {
   loading: false,
 };
 
+// https://ngrx.io/guide/signals/signal-store/entity-management#entity-updaters
 export const AppStore = signalStore(
   { providedIn: 'root' },
   withState(initialAppState),
