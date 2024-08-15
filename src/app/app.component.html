@@ -244,22 +244,32 @@
         </defs>
       </svg>
       <!-- FROM HERE down ******************************************** -->
-      <h1>Hello, {{ title() }}</h1>
+      <h1>Hello, {{ project() }}</h1>
+      <h1>by {{ name() }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
       <hr />
       <h2>{{ runner() }}</h2>
       <hr />
-      <app-counter key="xxxx"></app-counter>
-      <!--      <div>-->
-      <!--        @if ({ result: posts() }; as data) {-->
-      <!--          @for (item of data.result; track item) {-->
-      <!--            <hr />-->
-      <!--            <p>{{ item.id }}</p>-->
-      <!--            <p>{{ item.title }}</p>-->
-      <!--            <p>{{ item.views }}</p>-->
-      <!--          }-->
-      <!--        }-->
-      <!--      </div>-->
+      <hr />
+      <div>
+        @if ({ result: postEntities() }; as data) {
+          @for (item of data.result; track item.id) {
+            <app-post [post]="item"></app-post>
+            <hr />
+          }
+        }
+      </div>
+      <hr />
+      <hr />
+      <hr />
+      <div>
+        @if ({ result: commentEntities() }; as data) {
+          @for (item of data.result; track item.id) {
+            <app-comment [comment]="item"></app-comment>
+            <hr />
+          }
+        }
+      </div>
       <!-- ************************************************ TO HERE up -->
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>

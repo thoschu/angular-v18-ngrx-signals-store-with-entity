@@ -16,7 +16,6 @@
     "dev:http-server": "npx http-server -p 8080 -c-1 dist/estimateuai/browser",
     "dev:json-server": "npx json-server db.json5",
     "dev:start": "npx concurrently \"npm start\" \"npm run dev:json-server\"",
-    "dev:web-push": "npx web-push generate-vapid-keys - json",
     "dev:ngrok": "npx ngrok http 4200",
     "dev:rimraf:node_modules": "npx rimraf node_modules",
     "dev:rimraf:dist": "npx rimraf dist"

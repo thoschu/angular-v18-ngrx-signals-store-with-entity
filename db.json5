@@ -1,15 +1,17 @@
 {
   "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 },
-    { "id": "3", "title": "next title", "views": 400 }
+    { "id": 1, "title": "a title", "views": 100, author: 'Jane Doe' },
+    { "id": 2, "title": "another title", "views": 200, author: 'Tom S.' },
+    { "id": 3, "title": "next title", "views": 400, author: 'John Doe' }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    { "id": 1, "text": "a comment about post 1", "postId": 1, completed: true },
+    { "id": 2, "text": "another comment about post 1", "postId": 1, completed: false },
+    { "id": 3, "text": "next comment about post 2", "postId": 2, completed: false }
   ],
   "profile": {
-    "name": "typicode",
-    "range": 3000000000
+    "name": "adesso",
+    "location": "Hamburg",
+    "project": "EstimateUai"
   }
 }
