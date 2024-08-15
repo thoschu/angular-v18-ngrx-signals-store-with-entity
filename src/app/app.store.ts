@@ -15,6 +15,7 @@ import {
   removeEntity,
   setEntities,
   updateAllEntities,
+  updateEntity,
   withEntities,
 } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -80,6 +81,12 @@ export const AppStore = signalStore(
         },
         removePostItem(id: number): void {
           patchState(store, removeEntity(id, { collection: 'post' }));
+        },
+        updatePostItem({ id, views }: { id: number; views: number }): void {
+          patchState(
+            store,
+            updateEntity({ id, changes: { views } }, { collection: 'post' }),
+          );
         },
         completeAllComments(): void {
           patchState(
