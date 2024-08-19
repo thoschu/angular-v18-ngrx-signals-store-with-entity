@@ -22,11 +22,11 @@ import {
 } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
+import { TranslocoService } from '@jsverse/transloco';
 import { pipe, switchMap } from 'rxjs';
 
 import { Post, Posts } from './post/post.model';
 import { Comment, Comments } from './comment/comment.model';
-import { TranslocoService } from '@jsverse/transloco';
 
 interface Profile {
   name: string;
@@ -42,7 +42,7 @@ export interface AppState {
   // commentItems: Comments;
   // postItems: Posts;
   loading: boolean;
-  core: Record<'buttonText', string>;
+  core: Record<'buttonText' | 'info', string>;
 }
 
 const initialAppState: AppState = {
@@ -55,6 +55,7 @@ const initialAppState: AppState = {
   loading: false,
   core: {
     buttonText: 'CLICK',
+    info: '✋',
   },
 };
 
@@ -123,6 +124,25 @@ export const AppStore = signalStore(
 
           translocoService.setActiveLang(lang);
         },
+        getInfo(name: string): void {
+          translocoService.setActiveLang(name);
+        },
+        _loadTranslations: rxMethod<void>(
+          pipe(
+            switchMap(() =>
+              translocoService.selectTranslate('buttonText').pipe(
+                tapResponse(
+                  (buttonText: string) => {
+                    patchState(store, (state) => ({
+                      core: { ...state.core, buttonText },
+                    }));
+                  },
+                  (err: Error) => console.error(err),
+                ),
+              ),
+            ),
+          ),
+        ),
         _loadComments: rxMethod<void>(
           pipe(
             switchMap(() =>
@@ -180,6 +200,8 @@ export const AppStore = signalStore(
       store._loadProfile();
       store._loadComments();
       store._loadPosts('posts');
+
+      store._loadTranslations();
 
       store.changeLanguage();
 

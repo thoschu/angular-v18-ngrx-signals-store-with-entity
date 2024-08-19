@@ -38,7 +38,8 @@ export class AppComponent {
   protected readonly postEntities: Signal<Posts> = this.#appStore.postEntities;
   protected readonly commentEntities: Signal<Comments> =
     this.#appStore.commentEntities;
-  protected readonly buttonText: string = this.#appStore.core().buttonText;
+  protected readonly buttonText = this.#appStore.core.buttonText;
+  protected readonly info = this.#appStore.core.info;
   protected readonly date: Date = new Date();
 
   public readonly name = this.#appStore.name;

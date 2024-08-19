@@ -1,4 +1,5 @@
 {
+  "hello": "\uD83D\uDC4B",
   "info": "Mein Name ist {{name}}",
   "buttonText": "TEXT ÄNDERN"
 }

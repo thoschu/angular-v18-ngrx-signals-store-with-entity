@@ -1,4 +1,5 @@
 {
+  "hello": "✌",
   "info": "My name is {{name}}",
   "buttonText": "CHANGE TEXT"
 }

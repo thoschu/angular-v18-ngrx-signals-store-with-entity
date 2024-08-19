@@ -271,9 +271,10 @@
         }
       </div>
       <hr />
+      <p>{{ info() }}</p>
       <p transloco="info" [translocoParams]="{ name: 'Tom S.' }"></p>
       <p>{{ date | translocoDate }}</p>
-      <button (click)="changeLanguage()" transloco="buttonText">CLICK</button>
+      <button (click)="changeLanguage()">{{ buttonText() }}</button>
       <!-- ************************************************ TO HERE up -->
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
