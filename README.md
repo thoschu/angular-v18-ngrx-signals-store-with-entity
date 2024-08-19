@@ -1,7 +1,7 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-# EstimateUai
+# Angular 18 with ngrx signals store and entity
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
 
@@ -28,11 +28,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-## Info
-
-### i18n and l10n
-
-> - https://jsverse.github.io/transloco/
-> - https://jsverse.github.io/transloco/docs/getting-started/installation
-> - https://jsverse.github.io/transloco/docs/plugins/locale
