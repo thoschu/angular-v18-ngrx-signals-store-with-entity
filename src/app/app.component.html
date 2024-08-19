@@ -270,7 +270,9 @@
           }
         }
       </div>
-      <button (click)="removeLastComment()">REMOVE LAST</button>
+      <hr />
+      <p transloco="info" [translocoParams]="{ name: 'Tom S.' }"></p>
+      <button (click)="changeLanguage()" transloco="buttonText"></button>
       <!-- ************************************************ TO HERE up -->
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>

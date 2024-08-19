@@ -1,4 +1,5 @@
 import { Component, input, InputSignal } from '@angular/core';
+
 import { Post } from './post.model';
 
 @Component({

@@ -14,11 +14,12 @@ import { Posts } from './post/post.model';
 import { CommentComponent } from './comment/comment.component';
 import { PostComponent } from './post/post.component';
 import { add, multiply } from 'ramda';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommentComponent, PostComponent],
+  imports: [RouterOutlet, CommentComponent, PostComponent, TranslocoDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,8 +28,10 @@ export class AppComponent {
   readonly #appStore = inject(AppStore);
   readonly #counterObservable: Observable<number> = interval(2000);
 
-  protected postEntities: Signal<Posts> = this.#appStore.postEntities;
-  protected commentEntities: Signal<Comments> = this.#appStore.commentEntities;
+  protected readonly postEntities: Signal<Posts> = this.#appStore.postEntities;
+  protected readonly commentEntities: Signal<Comments> =
+    this.#appStore.commentEntities;
+  protected readonly buttonText: string = this.#appStore.core().buttonText;
 
   public readonly name = this.#appStore.name;
   public readonly project = this.#appStore.uppercaseProject;
@@ -63,9 +66,7 @@ export class AppComponent {
     // console.log(this.#appStore.commentEntityMap());
   }
 
-  protected removeLastComment(): void {
-    const last: number = this.#appStore.lengthCommentEntities();
-
-    this.#appStore.removeCommentItem(last);
+  protected changeLanguage(): void {
+    this.#appStore.changeLanguage();
   }
 }

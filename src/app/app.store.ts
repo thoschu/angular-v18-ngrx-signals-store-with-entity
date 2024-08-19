@@ -26,6 +26,7 @@ import { pipe, switchMap } from 'rxjs';
 
 import { Post, Posts } from './post/post.model';
 import { Comment, Comments } from './comment/comment.model';
+import { TranslocoService } from '@jsverse/transloco';
 
 interface Profile {
   name: string;
@@ -41,6 +42,7 @@ export interface AppState {
   // commentItems: Comments;
   // postItems: Posts;
   loading: boolean;
+  core: Record<'buttonText', string>;
 }
 
 const initialAppState: AppState = {
@@ -51,6 +53,9 @@ const initialAppState: AppState = {
   // commentItems: [],
   // postItems: [],
   loading: false,
+  core: {
+    buttonText: 'CLICK',
+  },
 };
 
 const postConfig: {
@@ -84,7 +89,13 @@ export const AppStore = signalStore(
     lengthCommentEntities: computed(() => commentEntities().length),
   })),
   withMethods(
-    (store, httpClient: HttpClient = inject<HttpClient>(HttpClient)) => {
+    (
+      store,
+      httpClient: HttpClient = inject<HttpClient>(HttpClient),
+      translocoService: TranslocoService = inject<TranslocoService>(
+        TranslocoService,
+      ),
+    ) => {
       return {
         updateName(name: string): void {
           patchState(store, { name });
@@ -106,6 +117,11 @@ export const AppStore = signalStore(
             store,
             updateAllEntities({ completed: true }, { collection: 'comment' }),
           );
+        },
+        changeLanguage(lang: string = translocoService.getActiveLang()): void {
+          lang = lang === 'en' ? 'de' : 'en';
+
+          translocoService.setActiveLang(lang);
         },
         _loadComments: rxMethod<void>(
           pipe(
@@ -164,6 +180,8 @@ export const AppStore = signalStore(
       store._loadProfile();
       store._loadComments();
       store._loadPosts('posts');
+
+      store.changeLanguage();
 
       const effectRef: EffectRef = effect(() => {
         console.log('[effect] app state', getState(store));
