@@ -1,5 +1,5 @@
 {
-  "name": "estimateuai",
+  "name": "angular-v18-ngrx-signals-store-with-entity",
   "version": "0.0.1",
   "scripts": {
     "prepare": "husky",
