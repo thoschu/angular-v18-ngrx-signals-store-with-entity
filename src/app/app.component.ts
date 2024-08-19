@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  signal,
   Signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -38,12 +39,13 @@ export class AppComponent {
   protected readonly postEntities: Signal<Posts> = this.#appStore.postEntities;
   protected readonly commentEntities: Signal<Comments> =
     this.#appStore.commentEntities;
-  protected readonly buttonText = this.#appStore.core.buttonText;
-  protected readonly info = this.#appStore.core.info;
-  protected readonly date: Date = new Date();
+  protected readonly buttonText: Signal<string> =
+    this.#appStore.core.buttonText;
+  protected readonly hello: Signal<string> = this.#appStore.core.hello;
+  protected readonly date: Signal<Date> = signal<Date>(new Date());
 
-  public readonly name = this.#appStore.name;
-  public readonly project = this.#appStore.uppercaseProject;
+  public readonly name: Signal<string> = this.#appStore.name;
+  public readonly project: Signal<string> = this.#appStore.uppercaseProject;
   public readonly runner: Signal<number> = toSignal(this.#counterObservable, {
     initialValue: 0,
   });

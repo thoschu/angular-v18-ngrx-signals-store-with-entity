@@ -42,7 +42,7 @@ export interface AppState {
   // commentItems: Comments;
   // postItems: Posts;
   loading: boolean;
-  core: Record<'buttonText' | 'info', string>;
+  core: Record<'buttonText' | 'hello', string>;
 }
 
 const initialAppState: AppState = {
@@ -55,7 +55,7 @@ const initialAppState: AppState = {
   loading: false,
   core: {
     buttonText: 'CLICK',
-    info: '✋',
+    hello: '✋',
   },
 };
 
@@ -129,6 +129,18 @@ export const AppStore = signalStore(
         },
         _loadTranslations: rxMethod<void>(
           pipe(
+            switchMap(() =>
+              translocoService.selectTranslate('hello').pipe(
+                tapResponse(
+                  (hello: string) => {
+                    patchState(store, (state) => ({
+                      core: { ...state.core, hello },
+                    }));
+                  },
+                  (err: Error) => console.error(err),
+                ),
+              ),
+            ),
             switchMap(() =>
               translocoService.selectTranslate('buttonText').pipe(
                 tapResponse(
