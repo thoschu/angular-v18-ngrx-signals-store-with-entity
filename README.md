@@ -31,9 +31,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Info
 
-### i18n
+### i18n and l10n
 
 > - https://jsverse.github.io/transloco/
 > - https://jsverse.github.io/transloco/docs/getting-started/installation
-
-### l10n
+> - https://jsverse.github.io/transloco/docs/plugins/locale
