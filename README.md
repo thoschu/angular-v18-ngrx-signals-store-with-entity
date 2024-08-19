@@ -31,10 +31,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Info
 
-### Signals
+### i18n
 
-> - https://angular.dev/guide/signals
-> - https://ngrx.io/guide/signals/signal-store/entity-management
+> - https://jsverse.github.io/transloco/
+> - https://jsverse.github.io/transloco/docs/getting-started/installation
 
-![ngrx-signals-1](public/ngrx-signals-3.png)
-
+### l10n

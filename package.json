@@ -31,6 +31,7 @@
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@angular/service-worker": "^18.1.0",
+    "@jsverse/transloco": "^7.4.3",
     "@ngrx/operators": "^18.0.2",
     "@ngrx/signals": "^18.0.2",
     "dotenv": "^16.4.5",
