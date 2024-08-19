@@ -6,6 +6,7 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTransloco } from '@jsverse/transloco';
+import { provideTranslocoLocale } from '@jsverse/transloco-locale';
 
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
@@ -26,5 +27,6 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
+    provideTranslocoLocale(),
   ],
 };

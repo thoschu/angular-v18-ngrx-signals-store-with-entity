@@ -32,6 +32,7 @@
     "@angular/router": "^18.1.0",
     "@angular/service-worker": "^18.1.0",
     "@jsverse/transloco": "^7.4.3",
+    "@jsverse/transloco-locale": "^7.0.1",
     "@ngrx/operators": "^18.0.2",
     "@ngrx/signals": "^18.0.2",
     "dotenv": "^16.4.5",
