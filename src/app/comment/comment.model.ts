@@ -1,5 +1,5 @@
 export interface Comment {
-  id: number;
+  id: string;
   text: string;
   postId: number;
   completed: boolean;

@@ -9,5 +9,5 @@ import { Post } from './post.model';
   styleUrl: './post.component.scss',
 })
 export class PostComponent {
-  readonly post: InputSignal<Post | undefined> = input<Post>();
+  readonly post: InputSignal<Post> = input.required<Post>();
 }

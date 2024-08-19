@@ -51,7 +51,7 @@ export class AppComponent {
       );
       const views: number = multiply(multiply(value, 10), id);
 
-      this.#appStore.updatePostItem({ views, id });
+      this.#appStore.updatePostItem(id.toString(), views);
     });
 
     // console.log(this.#appStore.postIds);
@@ -61,5 +61,11 @@ export class AppComponent {
     // console.log(this.#appStore.commentIds);
     // console.log(this.#appStore.commentEntities);
     // console.log(this.#appStore.commentEntityMap());
+  }
+
+  protected removeLastComment(): void {
+    const last: number = this.#appStore.lengthCommentEntities();
+
+    this.#appStore.removeCommentItem(last);
   }
 }

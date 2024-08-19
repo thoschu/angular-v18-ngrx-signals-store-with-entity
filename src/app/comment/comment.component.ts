@@ -10,5 +10,5 @@ import { Comment } from './comment.model';
   styleUrl: './comment.component.scss',
 })
 export class CommentComponent {
-  readonly comment: InputSignal<Comment | undefined> = input<Comment>();
+  readonly comment: InputSignal<Comment> = input.required<Comment>();
 }
