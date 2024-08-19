@@ -13,7 +13,7 @@
     "onchange": "npx onchange \"src/*\" -- prettier --write --ignore-unknown {{changed}}",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write --ignore-unknown src",
-    "dev:http-server": "npx http-server -p 8080 -c-1 dist/estimateuai/browser",
+    "dev:http-server": "npx http-server -p 8080 -c-1 dist/app/browser",
     "dev:json-server": "npx json-server db.json5",
     "dev:start": "npx concurrently \"npm start\" \"npm run dev:json-server\"",
     "dev:ngrok": "npx ngrok http 4200",
