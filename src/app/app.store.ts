@@ -12,7 +12,9 @@ import {
 } from '@ngrx/signals';
 import {
   addEntity,
+  entityConfig,
   removeEntity,
+  SelectEntityId,
   setEntities,
   updateAllEntities,
   updateEntity,
@@ -51,6 +53,16 @@ const initialAppState: AppState = {
   loading: false,
 };
 
+const postConfig: {
+  entity: Post;
+  collection: 'post';
+  selectId: SelectEntityId<NoInfer<Post>>;
+} = entityConfig({
+  entity: type<Post>(),
+  collection: 'post',
+  selectId: (post: Post) => post.id,
+});
+
 // https://ngrx.io/guide/signals/signal-store/entity-management#entity-updaters
 export const AppStore = signalStore(
   { providedIn: 'root' },
@@ -61,10 +73,11 @@ export const AppStore = signalStore(
     entity: type<Comment>(),
     collection: 'comment',
   }),
-  withEntities<Post, 'post'>({
-    entity: type<Post>(),
-    collection: 'post',
-  }),
+  // withEntities<Post, 'post'>({
+  //   entity: type<Post>(),
+  //   collection: 'post',
+  // }),
+  withEntities<Post, 'post'>(postConfig),
   withComputed(({ project, postEntities, commentEntities }) => ({
     uppercaseProject: computed(() => project().toUpperCase()),
     lengthPostEntities: computed(() => postEntities().length),
@@ -77,15 +90,15 @@ export const AppStore = signalStore(
           patchState(store, { name });
         },
         addPostItem(item: Post): void {
-          patchState(store, addEntity(item, { collection: 'post' }));
+          patchState(store, addEntity(item, postConfig));
         },
-        removePostItem(id: number): void {
-          patchState(store, removeEntity(id, { collection: 'post' }));
+        removeCommentItem(id: number): void {
+          patchState(store, removeEntity(id, { collection: 'comment' }));
         },
-        updatePostItem({ id, views }: { id: number; views: number }): void {
+        updatePostItem(id: string, views: number): void {
           patchState(
             store,
-            updateEntity({ id, changes: { views } }, { collection: 'post' }),
+            updateEntity({ id, changes: { views } }, postConfig),
           );
         },
         completeAllComments(): void {
@@ -117,10 +130,7 @@ export const AppStore = signalStore(
               httpClient.get<Posts>('http://localhost:3000/' + path).pipe(
                 tapResponse(
                   (posts: Posts) => {
-                    patchState(
-                      store,
-                      setEntities(posts, { collection: 'post' }),
-                    );
+                    patchState(store, setEntities(posts, postConfig));
                   },
                   (err: Error) => console.error(err),
                 ),
